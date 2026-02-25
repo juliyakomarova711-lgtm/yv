@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cupra — Классификатор РБ</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app" id="app">
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar__header">
+          <h1>Cupra</h1>
+          <button id="sidebarToggle" class="icon-button" aria-label="Свернуть меню">⟨</button>
+        </div>
+        <nav class="sidebar__nav">
+          <button class="nav-link active" data-page="overview">Обзор</button>
+          <button class="nav-link" data-page="us1">US1 · Классификатор РБ</button>
+          <button class="nav-link" data-page="us2">US2 · Заполнение файла</button>
+          <button class="nav-link" data-page="us3">US3 · Ошибки и ограничения</button>
+        </nav>
+      </aside>
+
+      <main class="content">
+        <header class="content__header">
+          <button id="sidebarOpen" class="icon-button hidden" aria-label="Открыть меню">☰</button>
+          <div>
+            <h2 id="pageTitle">Обзор процесса</h2>
+            <p id="pageSubtitle">AS IS / TO BE для автоматизации подбора доп. кодов</p>
+          </div>
+        </header>
+
+        <section class="page active" id="page-overview">
+          <div class="grid-two">
+            <article class="card">
+              <h3>AS IS</h3>
+              <ol>
+                <li>Пользователь скачивает файл из Belaz.</li>
+                <li>Пользователь добавляет дополнительную колонку.</li>
+                <li>Пользователь, используя Постановление, заполняет колонку с доп. кодом.</li>
+                <li>Пользователь направляет файл в соответствующие организации.</li>
+              </ol>
+            </article>
+            <article class="card accent">
+              <h3>TO BE</h3>
+              <ol>
+                <li>Пользователь запрашивает скачивание файла из Cupra.</li>
+                <li>Система подбирает доп. коды по Постановлению.</li>
+                <li>Система формирует файл.</li>
+                <li>Пользователь скачивает файл.</li>
+                <li>Пользователь направляет файл в соответствующие организации.</li>
+              </ol>
+            </article>
+          </div>
+        </section>
+
+        <section class="page" id="page-us1">
+          <article class="card">
+            <h3>US1. Заполнение классификатора РБ</h3>
+            <h4>Возможности настройки правил</h4>
+            <ul>
+              <li>Добавление новых правил для ТНВЭД кодов.</li>
+              <li>Поддержка точного совпадения и масок (например, 0702**).</li>
+              <li>Настройка 4 цифр кода с возможностью фиксированных значений.</li>
+              <li>Гибкая настройка по свойствам ТНВЭД и торговой марки.</li>
+              <li>Фильтрация по ТН ВЭД.</li>
+              <li>Проверка пересечения правил при сохранении и изменении.</li>
+              <li>Поддержка древовидной логики формирования кода.</li>
+            </ul>
+            <h4>Хранимые поля классификатора</h4>
+            <table>
+              <thead>
+                <tr>
+                  <th>Поле</th>
+                  <th>Требование</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Уровень (11, 12, 13, 14)</td>
+                  <td>Обязательное</td>
+                </tr>
+                <tr>
+                  <td>Зависимость от головного уровня</td>
+                  <td>Обязательное</td>
+                </tr>
+                <tr>
+                  <td>Проставляемый код уровня</td>
+                  <td>Обязательное</td>
+                </tr>
+                <tr>
+                  <td>Условия установки уровня (фикс / свойство)</td>
+                  <td>Обязательное</td>
+                </tr>
+                <tr>
+                  <td>Значение условия</td>
+                  <td>Обязательное, если выбран тип «Свойство»</td>
+                </tr>
+              </tbody>
+            </table>
+          </article>
+        </section>
+
+        <section class="page" id="page-us2">
+          <article class="card">
+            <h3>US2. Заполнение файла по заказу</h3>
+            <h4>Источники выгрузки</h4>
+            <ul>
+              <li>CustomLight</li>
+              <li>CustomBill</li>
+            </ul>
+            <h4>Правила заполнения</h4>
+            <ul>
+              <li>Если для строки отсутствует правило — ячейка остаётся пустой.</li>
+              <li>Древовидный подбор кода выполняется последовательно до 14 знака.</li>
+            </ul>
+            <h4>Алгоритм подбора</h4>
+            <ol>
+              <li>Находим основной код (11-й знак).</li>
+              <li>Проверяем условия текущего узла.</li>
+              <li>Если условие выполнено — переходим к дочерним правилам.</li>
+              <li>Повторяем шаги до 14-го знака.</li>
+              <li>Если ветка обрывается — дополняем нулями (если требуется).</li>
+            </ol>
+          </article>
+        </section>
+
+        <section class="page" id="page-us3">
+          <article class="card">
+            <h3>US3. Обработка ошибок и ограничения</h3>
+            <h4>Ограничения</h4>
+            <ul>
+              <li>При добавлении нового ТНВЭД к продаже требуется проверка корректности подбора классификатора.</li>
+              <li>При отсутствии корректного правила требуется доработка классификатора перед выгрузкой.</li>
+            </ul>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
